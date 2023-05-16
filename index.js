@@ -89,6 +89,19 @@ const getUserInfo = async (conn, id,role) => {
     })
 }
 
+const getUserPemilu = async (conn,idUser) => {
+    return new Promise((resolve, reject) => {
+        let stringSql = "SELECT * FROM tabelBaru INNER JOIN pemilihan ON tabelBaru.id_Pemilihan = pemilihan.pemilihan_id WHERE tabelBaru.idPemilih = ?";
+        conn.query(stringSql, [`${idUser}`], (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    })
+}
+
 app.post('/signin',async(req,res)=>{
     const conn = await dbConnect();
     const signIn = await login(conn,req.query.username,req.query.password);
