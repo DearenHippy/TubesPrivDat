@@ -116,6 +116,32 @@ app.post('/signin',async(req,res)=>{
     }
 })
 
-app.get('/', (req, res) => {
+const initAkun = async (conn) => {
+    const crypto = await import('node:crypto');
+    let hashed_pass;
+    const username = ['Deren', 'Vito', 'GAS', 'Vincent', 'Ivan']
+    return new Promise((resolve, reject) => {
+        let stringSql = "INSERT INTO akun (username, password, role) VALUES(?, ?, ?)";
+        let username_item;
+        let password_item = 'password';
+        for(let i = 0; i < 5; i++) {
+            username_item = username[i];
+            hashed_pass = crypto.createHash('sha256').update(password_item).digest('base64');
+            conn.query(stringSql, [`${username_item}`, `${hashed_pass}`, 'pemilih'], (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })    
+        }     
+    })
+}
+
+
+
+app.get('/', async (req, res) => {
+    const conn = await dbConnect();
+    await initAkun(conn);
     res.render("login.ejs");
 })
