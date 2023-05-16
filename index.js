@@ -102,29 +102,63 @@ const getUserPemilu = async (conn,idUser) => {
     })
 }
 
+const getCalonPemilu = async (conn) => {
+    return new Promise((resolve, reject) => {
+        let stringSql = "SELECT * FROM calon INNER JOIN pemilihan ON calon.pemilihan_id = pemilihan.pemilihan_id";
+        conn.query(stringSql, (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    })
+}
+
+const getAdminPemilu = async (conn) => {
+    return new Promise((resolve, reject) => {
+        let stringSql = "SELECT * FROM pemilihan";
+        conn.query(stringSql, (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    })
+}
+
 app.post('/signin',async(req,res)=>{
     const conn = await dbConnect();
     const signIn = await login(conn,req.query.username,req.query.password);
     if(signIn[0]===undefined){
-
+        
     }
     else{
         const role = signIn[0].role;
         const id = signIn[0].id;
         req.session.role = role;
         if(role==='admin'){
-            //langusng ke page
+            const adminPemilu = await getAdminPemilu(conn);
+            res.render("admin-home.ejs",{
+                //atribut yg diperluin di home pemilih dari adminPemilu
+            });
         }
         else if(role==='pemilih'){
             const infoUser = await getUserInfo(conn,id,role);
-            //hal pemilu
+            const userPemilu = await getUserPemilu(conn,id);
             req.session.nama = infoUser[0].nama;
+            res.render("pemilih-home.ejs",{
+                //atribut yg diperluin di home pemilih dari userPemilu
+            });
         }
         else{
             const infoUser = await getUserInfo(conn,id,role);
+            const calonPemilu = await getCalonPemilu(conn);
             req.session.nama = infoUser[0].nama;
-            //insight
-            //session
+            res.render("calon-home.ejs",{
+                //atribut yg diperluin di home pemilih dari calonPemilu
+            });
         }
     }
 })
