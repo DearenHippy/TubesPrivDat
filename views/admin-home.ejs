@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin-home.css">
+    <title>Admin Home</title>
+</head>
+<body>
+    <main>
+        <div id="container">
+            <!--loop daftar pemilihan-->
+            <form method="post" action="model">
+                <button class="button" type="submit">
+                    <div class="card">
+                        <p id="nama">Nama Pemilu</p>
+                        <p id="ukuran"></p>
+                        <div id="gambar" name="gambar">
+                            <!-- <img src="<%= row.image %>" alt="gambar" height="255px" width="250px"> -->
+                        </div>
+                        <!-- <input id="id" name="idModel" value="<%= row.idModelBaju %>" hidden>
+                        <p id="harga" name="harga">Rp <%=row.hargaBaju%></p> -->
+                    </div>
+                </button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
