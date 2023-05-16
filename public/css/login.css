@@ -1,0 +1,117 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Nunito';
+}
+
+body {
+    margin: 100px;
+    background-color: #2653D4;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: bolder;
+}
+
+span {
+    color: red;
+}
+
+.shadow {
+    box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+}
+
+.login {
+    /* width: 600px; */
+    /* margin-bottom: 50px; */
+    background-color: #4E73DF;
+    border-radius: 30px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    
+    font-size: 1.5rem;
+}
+
+.login form {
+    margin: 30px;
+
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: min-content;
+}
+
+.login p {
+    text-align: center;
+    margin: 0;
+}
+
+.login div {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    text-align: start;
+    font-size: 1rem;
+}
+
+#daftar {
+    font-size: 0.75rem;
+}
+
+#changeP {
+    font-size: 00.75rem;
+}
+
+a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+input{
+    height: 55px;
+    width: 500px;
+
+    border: white;
+    border-radius: 30px;
+
+    font-size: 1rem;
+}
+
+input:focus {
+    outline-color: red;
+}
+
+input:not(input[type="submit"]) {
+    padding-left: 1rem;
+}
+
+input[type="submit"] {
+    background-color: #2653D4;
+
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+}
+
+input[name='Cancel'] {
+    background-color: red;
+}
