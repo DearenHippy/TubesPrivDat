@@ -74,10 +74,10 @@ const getUserInfo = async (conn, id,role) => {
     return new Promise((resolve, reject) => {
         let stringSql = "";
         if(role==='pemilih'){
-            stringSql = "SELECT * FROM akun INNER JOIN akun_pemilih ON akun.id = akun_pemilih.id WHERE akun.id = ?"
+            stringSql = "SELECT * FROM akun INNER JOIN akun_pemilih ON akun.akun_id = akun_pemilih.akun_id WHERE akun.akun_id = ?"
         }
         else{
-            stringSql = "SELECT * FROM akun INNER JOIN akun_calon ON akun.id = akun_calon.id WHERE akun.id = ?"
+            stringSql = "SELECT * FROM akun INNER JOIN akun_calon ON akun.akun_id = akun_calon.calon_id WHERE akun.akun_id = ?"
         }
         conn.query(stringSql, [`${id}`], (error, res) => {
             if (error) {
@@ -91,7 +91,7 @@ const getUserInfo = async (conn, id,role) => {
 
 const getUserPemilu = async (conn,idUser) => {
     return new Promise((resolve, reject) => {
-        let stringSql = "SELECT * FROM tabelBaru INNER JOIN pemilihan ON tabelBaru.id_Pemilihan = pemilihan.pemilihan_id WHERE tabelBaru.idPemilih = ?";
+        let stringSql = "SELECT * FROM hak_pilih INNER JOIN pemilihan ON hak_pilih.pemilihan_id = pemilihan.pemilihan_id WHERE hak_pilih.pemilih_id = ?";
         conn.query(stringSql, [`${idUser}`], (error, res) => {
             if (error) {
                 reject(error)
@@ -128,20 +128,34 @@ const getAdminPemilu = async (conn) => {
     })
 }
 
+const getDetailPemiluPemilih = async (conn,idPemilu) => {
+    return new Promise((resolve, reject) => {
+        let stringSql = "SELECT * FROM pemilihan INNER JOIN calon ON pemilihan.pemilihan_id = calon.pemilihan_id WHERE pemilihan.pemilihan_id = ?";
+        conn.query(stringSql, [`${idPemilu}`] ,(error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    })
+}
+
 app.post('/signin',async(req,res)=>{
     const conn = await dbConnect();
-    const signIn = await login(conn,req.query.username,req.query.password);
+    const signIn = await login(conn,req.body.username,req.body.password);
     if(signIn[0]===undefined){
         
     }
     else{
         const role = signIn[0].role;
-        const id = signIn[0].id;
+        const id = signIn[0].akun_id;
         req.session.role = role;
         if(role==='admin'){
             const adminPemilu = await getAdminPemilu(conn);
             res.render("admin-home.ejs",{
                 //atribut yg diperluin di home pemilih dari adminPemilu
+                table: adminPemilu
             });
         }
         else if(role==='pemilih'){
@@ -150,6 +164,7 @@ app.post('/signin',async(req,res)=>{
             req.session.nama = infoUser[0].nama;
             res.render("pemilih-home.ejs",{
                 //atribut yg diperluin di home pemilih dari userPemilu
+                table: userPemilu
             });
         }
         else{
@@ -163,10 +178,18 @@ app.post('/signin',async(req,res)=>{
     }
 })
 
+app.post('/model',async(req,res)=>{
+    const conn = await dbConnect();
+    const dataPemilihan = await getDetailPemiluPemilih(conn,req.body.idPemilihan);
+    res.render("pemilih-pilihcalon.ejs",{
+        table: dataPemilihan
+    })
+})
+
 const initAkun = async (conn) => {
     const crypto = await import('node:crypto');
     let hashed_pass;
-    const username = ['Deren', 'Vito', 'GAS', 'Vincent', 'Ivan']
+    const username = ['Kevin','Bob','Alice','Ben','John']
     return new Promise((resolve, reject) => {
         let stringSql = "INSERT INTO akun (username, password, role) VALUES(?, ?, ?)";
         let username_item;
@@ -174,7 +197,7 @@ const initAkun = async (conn) => {
         for(let i = 0; i < 5; i++) {
             username_item = username[i];
             hashed_pass = crypto.createHash('sha256').update(password_item).digest('base64');
-            conn.query(stringSql, [`${username_item}`, `${hashed_pass}`, 'pemilih'], (error, res) => {
+            conn.query(stringSql, [`${username_item}`, `${hashed_pass}`, 'calon'], (error, res) => {
             if (error) {
                 reject(error)
             } else {
@@ -189,6 +212,5 @@ const initAkun = async (conn) => {
 
 app.get('/', async (req, res) => {
     const conn = await dbConnect();
-    await initAkun(conn);
     res.render("login.ejs");
 })
