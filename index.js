@@ -186,6 +186,10 @@ app.post('/model',async(req,res)=>{
     })
 })
 
+app.post('/addPemilu', async(req,res)=>{
+    res.render("admin-buatpemilu.ejs")
+})
+
 const initAkun = async (conn) => {
     const crypto = await import('node:crypto');
     let hashed_pass;

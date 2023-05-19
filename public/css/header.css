@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Nunito';
+}
+
+header {
+    position: sticky;
+    background-color: #2653D4;
+    padding: 0px 10%;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header #left {
+    display: flex;
+    align-items: center;
+}
+
+header a:not(#linkToValidate){
+    margin-left: 50px;
+
+    color: white;
+    font-weight: bold;
+}
+
+header .white{
+    color: white;
+}
+
+header a:visited:not(#linkToValidate) {
+    text-decoration: underline;
+    text-decoration-color: red;
+}
+
+header h4 {
+    font-weight: bolder;
+}
+
+header span {
+    color: red;
+}

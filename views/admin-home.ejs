@@ -8,7 +8,13 @@
     <title>Admin Home</title>
 </head>
 <body>
+    <%- include('./header.ejs')  %>
     <main>
+        <form method="post" action="addPemilu">
+            <div id="conBtn">
+                <button id="btnTambah" type="submit">Tambah</button>
+            </div>
+        </form>
         <div id="container">
             <!--loop daftar pemilihan-->
             <% for(const row of table) { %>

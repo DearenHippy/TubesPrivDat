@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin-buatpemilu.css">
+    <title>Admin Home</title>
+</head>
+<body>
+    <%- include('./header.ejs')  %>
+    <main>
+        <h2>Buat Pemilu</h2>
+        <form action="adminbuatPemilu" method="post">
+            <label for="nama">Nama</label>
+            <input type="text" name="nama">
+            <label for="tglMulai">Tanggal Mulai</label>
+            <input type="datetime-local" name="tglMulai">
+            <label for="tglSelesai">Tanggal Selesai</label>
+            <input type="datetime-local" name="tglSelesai">
+            <label for="role">Role</label>
+            <select name="jenis">
+                <option value="owner">Jenis 1</option>
+                <option value="buyer">Jenis 2</option>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+</body>
+</html>
