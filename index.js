@@ -190,6 +190,49 @@ app.post('/addPemilu', async(req,res)=>{
     res.render("admin-buatpemilu.ejs")
 })
 
+app.get('/admin-kelola-calon', async(req,res)=>{
+    const conn = await dbConnect();
+    const listCalon = await getCalon(conn);
+    res.render("admin-kelolacalon.ejs",{
+        table: listCalon
+    })
+})
+
+app.post('/detailCalon', async(req,res)=>{
+    const conn = await dbConnect();
+    const detailCalon = await getDetailCalon(conn,req.body.idCalon);
+    console.log(detailCalon);
+    res.render("admin-editcalon.ejs",{
+        row: detailCalon
+    })
+})
+
+const getDetailCalon = async (conn,idCalon) => {
+    return new Promise((resolve, reject) => {
+        let stringSql = "SELECT calon.calon_id,calon.nama,pemilihan.nama as 'nama_pemilihan',calon.no_urut,calon.path_foto FROM pemilihan INNER JOIN calon ON pemilihan.pemilihan_id = calon.pemilihan_id WHERE calon.calon_id = ?";
+        conn.query(stringSql, [`${idCalon}`] ,(error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    })
+}
+
+const getCalon = async (conn) => {
+    return new Promise((resolve, reject) => {
+        let stringSql = "SELECT calon.calon_id,calon.nama,pemilihan.nama as 'nama_pemilihan',calon.no_urut,calon.path_foto FROM pemilihan INNER JOIN calon ON pemilihan.pemilihan_id = calon.pemilihan_id";
+        conn.query(stringSql ,(error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    })
+}
+
 const initAkun = async (conn) => {
     const crypto = await import('node:crypto');
     let hashed_pass;

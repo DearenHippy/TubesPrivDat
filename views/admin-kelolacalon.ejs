@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin-home.css">
+    <title>Admin Kelola Calon</title>
+</head>
+<body>
+    <%- include('./header.ejs')  %>
+    <main>
+        <div id="container">
+            <!--loop daftar pemilihan-->
+            <% for(const row of table) { %>
+            <form method="post" action="detailCalon">
+                <button class="button" type="submit">
+                    <div class="card">
+                        <p id="namaCalon">Nama Calon : <%=row.nama%></p>
+                        <p id="namaPemilihan">Nama Pemilihan : <%=row.nama_pemilihan%></p>
+                        <p id="noUrut">Nomor Urut : <%=row.no_urut%></p>
+                        <p id="pathFoto">Foto <%=row.path_foto%></p>
+                        <input id="id" name="idCalon" value="<%= row.calon_id%>" hidden>
+                    </div>
+                </button> 
+            </form>
+            <% } %>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin-home.css">
+    <title>Admin Edit Calon</title>
+</head>
+<body>
+    <%- include('./header.ejs')  %>
+    <main>
+        <div id="container">
+            <!--loop daftar pemilihan-->
+            <form method="post" action="detailCalon">
+                <label for="nama">Nama</label>
+                <input type="text" name="nama" value="<%= row[0].nama%>">
+                <label for="noUrut">Nomor Urut</label>
+                <input type="text" name="noUrut" value="<%= row[0].no_urut%>">
+                <label for="pathFoto">Foto</label>
+                <input type="file" name="pathFoto">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
