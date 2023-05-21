@@ -3,10 +3,11 @@ import * as UserSessionController from '../controllers/user-session.js';
 import * as AdminController from '../controllers/admin.js'
 
 const router = express.Router();
+const role = 'admin';
 
-router.get('/', UserSessionController.authenticate, UserSessionController.authorize, AdminController.index);
+router.get('/', UserSessionController.auth(role), AdminController.index);
 
-router.get('/home', UserSessionController.authenticate, UserSessionController.authorize, AdminController.home);
+router.get('/home', UserSessionController.auth(role), AdminController.home);
 
 export {
     router

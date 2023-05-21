@@ -21,34 +21,21 @@ const init = (app) => {
     );
 };
 
-const authenticate = (req, res, next) => {
-    if (req.session.role === undefined) {
-        return res.redirect('/login');
-    }
-
-    next();
-};
-
-const authorize = (req, res, next, role) => {
-    if (role !== req.session.role) {
-        return res.json({
-            err_code: 403,
-            message: 'Unauthorized'
-        });
-    }
-
-    next();
-};
-
-const redirectBasedOnRole = (req, res, next, role) => {
-    if (role !== undefined) {
-        res.redirect('/'+req.session.role);
-    }
-};
+const auth = (role) => {
+    return (req, res, next) => {
+        if (req.session.role === undefined) {
+            res.redirect('/login');
+        } else {
+            if (req.session.role !== role) {
+                res.status(403).send('Unauthorized access')
+            } else {
+                next();
+            }
+        }
+    };
+}
 
 export {
     init,
-    authenticate,
-    authorize,
-    redirectBasedOnRole
+    auth
 };
