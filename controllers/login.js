@@ -1,6 +1,7 @@
 import * as LoginModel from '../models/login.js';
 import * as CalonModel from '../models/calon.js';
 import * as PemilihModel from '../models/pemilih.js';
+import * as AdminModel from '../models/admin.js';
 
 const index = async (req, res) => {
     res.render('login.ejs');
@@ -28,6 +29,11 @@ const login = async (req, res) => {
                 [infoUser] = await PemilihModel.get(akun_id);
             }
 
+            req.session.nama = [infoUser].nama
+        }
+        else{
+            let infoUser;
+            [infoUser] = await AdminModel.get(akun_id);
             req.session.nama = [infoUser].nama
         }
 
