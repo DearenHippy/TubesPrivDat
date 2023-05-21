@@ -1,0 +1,27 @@
+header {
+  background-color: #3c8dbc;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+}
+
+#logo {
+  background-color: #367FA9;
+  grid-column: 1 / 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto Medium', sans-serif;
+}
+
+#logo img {
+  height: 40px;
+  margin-right: 8px;
+}
+
+#logo h2 {
+  color: #D53A2A;
+}
+
+#logo span {
+  color: white;
+}

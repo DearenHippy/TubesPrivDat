@@ -1,0 +1,24 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  display: grid;
+  grid-template-rows: 80px 2fr;
+  grid-template-columns: 320px 1fr 2fr;
+  font-family: 'Roboto', sans-serif;
+}
+
+header {
+  grid-column: 1 / 4;
+}
+
+aside {
+  grid-row: 2 / 3;
+}
