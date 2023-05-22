@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/general.css">
+    <title>E-Pemilu | Admin Pemilih</title>
+</head>
+
+<body>
+    <%- include('../partials/header.ejs') %>
+    <main>
+        <div id="container">
+            <!--loop daftar pemilihan-->
+            <% for(const row of table) { %>
+            <form method="post" action="detailPemilih">
+                <button class="button" type="submit">
+                    <div class="card">
+                        <p id="namaPemilih">Nama Pemilih : <%=row.nama%></p>
+                        <p id="umur">Umur : <%=row.umur%></p>
+                        <p id="jenis_kelamin">Jenis Kelamin : <%=row.jenis_kelamin%></p>
+                        <p id="alamat">Alamat : <%=row.alamat%></p>
+                        <p id="pendidikan">Pendidikan : <%=row.pendidikan%></p>
+                        <p id="desa">Desa : <%=row.nama_desa%></p>
+                        <p id="kota">Kota : <%=row.nama_kota%></p>
+                        <p id="provinsi">Provinsi : <%=row.nama_provinsi%></p>
+                        <input id="id" name="idPemilih" value="<%= row.pemilih_id%>" hidden>
+                    </div>
+                </button> 
+            </form>
+            <% } %>
+        </div>
+    </main>
+    <%- include('../partials/sidebar-admin.ejs') %>
+</body>
+
+</html>

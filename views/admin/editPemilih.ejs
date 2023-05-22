@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/general.css">
+    <title>E-Pemilu | Admin Edit Calon</title>
+</head>
+
+<body>
+    <%- include('../partials/header.ejs') %>
+    <main>
+        <div id="container">
+            <!--loop daftar pemilihan-->
+            <form method="post" action="editPemilih">
+                <label for="nama">Nama</label>
+                <input type="text" name="nama" value="<%= row[0].nama%>">
+                <label for="umur">Umur</label>
+                <input type="text" name="umur" value="<%= row[0].umur%>">
+                <label for="jenis_kelamin">Jenis Kelamin</label>
+                <input type="text" name="jenis_kelamin" value="<%= row[0].jenis_kelamin%>">
+                <label for="alamat">Alamat</label>
+                <input type="text" name="alamat" value="<%= row[0].alamat%>">
+                <label for="pendidikan">Pendidikan</label>
+                <input type="text" name="pendidikan" value="<%= row[0].pendidikan%>">
+                <label for="desar">Desa</label>
+                <input type="text" name="desa" value="<%= row[0].nama_desa%>">
+                <label for="kota">Kota</label>
+                <input type="text" name="kota" value="<%= row[0].nama_kota%>">
+                <label for="provinsi">Provinsi</label>
+                <input type="text" name="provinsi" value="<%= row[0].nama_provinsi%>">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </main>
+    <%- include('../partials/sidebar-admin.ejs') %>
+</body>
+
+</html>
