@@ -11,7 +11,16 @@ const daftarPemilu = async (req, res) => {
     });
 };
 
+const mulaiPemilu = async (req, res) => {
+    const calon = await PemilihModel.getCalonTerdaftar(req.params.id);
+    console.log(calon[0])
+    res.render('pemilih/mulai-pemilu.ejs', {
+        calon: calon
+    });
+};
+
 export {
     index,
-    daftarPemilu
+    daftarPemilu,
+    mulaiPemilu
 };

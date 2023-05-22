@@ -44,18 +44,26 @@
         <div id="page-content-wrapper">
             <!-- Page content-->
             <div class="container-fluid">
-                <h1 class="mt-4 text-center">Pemilu</h1>
+                <h1 class="mt-4 text-center">Pemilu presiden</h1>
                 <div class="row row-cols-auto">
-                    <% pemilu.forEach((element) => { %>
                     <div class="col card m-2" style="width: 18rem;">
                         <div class="card-body">
-                            <h5 class="card-title"><%= element.nama %></h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                                the card's content.</p>
-                            <a href="/pemilih/pemilu/mulai/<%= element.pemilihan_id %>" class="btn btn-primary">Mulai</a>
+                            <img src="/images/avatar.jpg" class="card-img-top" alt="...">
+                            <h5 class="card-title"><%= calon[0].no_urut %></h5>
+                            <p class="card-text">Calon Presiden: <%= calon[0].nama %></p>
+                            <p class="card-text">Calon Wakil Presiden: <%= calon[1].nama %></p>
+                            <a href="/pemilih/pemilu/mulai/" class="btn btn-primary">Pilih</a>
                         </div>
                     </div>
-                    <% }); %>
+                    <div class="col card m-2" style="width: 18rem;">
+                        <div class="card-body">
+                            <img src="/images/avatar.jpg" class="card-img-top" alt="...">
+                            <h5 class="card-title"><%= calon[2].no_urut %></h5>
+                            <p class="card-text">Calon Presiden: <%= calon[2].nama %></p>
+                            <p class="card-text">Calon Wakil Presiden: <%= calon[3].nama %></p>
+                            <a href="/pemilih/pemilu/mulai/" class="btn btn-primary">Pilih</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

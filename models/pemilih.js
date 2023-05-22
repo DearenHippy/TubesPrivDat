@@ -56,7 +56,30 @@ const getPemilu = async (id) => {
     });
 };
 
+const getCalonTerdaftar = async (id) => {
+    const conn = await DB.getConnection();
+    const sql = `
+        SELECT
+            *
+        FROM
+            calon
+        WHERE
+            pemilihan_id = ?
+    `;
+
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [`${id}`], (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+};
+
 export {
     get,
-    getPemilu
+    getPemilu,
+    getCalonTerdaftar
 };

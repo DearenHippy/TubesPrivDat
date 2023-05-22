@@ -7,6 +7,7 @@ const role = 'pemilih';
 
 router.get('/', UserSessionController.auth(role), PemilihController.index);
 router.get('/pemilu', UserSessionController.auth(role), PemilihController.daftarPemilu);
+router.get('/pemilu/mulai/:id', UserSessionController.auth(role), PemilihController.mulaiPemilu);
 
 export {
     router
