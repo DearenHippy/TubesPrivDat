@@ -28,6 +28,20 @@ const get = async (akun_id) => {
     });
 }
 
+const getPemilu = async (akun_id) => {
+    const conn = await DB.getConnection();
+    const sql = `
+        SELECT
+            *
+        FROM
+            (
+                SELECT
+                FROM
+                    terdaftar
+            )
+    `;
+};
+
 export {
     get
 };

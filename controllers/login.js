@@ -31,6 +31,8 @@ const login = async (req, res) => {
                     [infoUser] = await PemilihModel.get(akun_id);
                 }
     
+                console.log(infoUser);
+
                 req.session.nama = [infoUser].nama
             }
             else{
