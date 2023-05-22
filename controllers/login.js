@@ -20,25 +20,24 @@ const login = async (req, res) => {
         req.session.username = username;
         req.session.role = role;
 
-        let infoUser;
+        let info_user;
+        let role_id;
         try {
             if (role !== 'admin') {
-                let infoUser;
-    
                 if (role === 'calon') {
-                    [infoUser] = await CalonModel.get(akun_id);
+                    [info_user] = await CalonModel.get(akun_id);
+                    role_id = info_user.calon_id;
                 } else {
-                    [infoUser] = await PemilihModel.get(akun_id);
+                    [info_user] = await PemilihModel.get(akun_id);
+                    role_id = info_user.pemilih_id;
                 }
-    
-                console.log(infoUser);
 
-                req.session.nama = [infoUser].nama
+                req.session.nama = [info_user].nama;
+                req.session.role_id = role_id;
             }
             else{
-                let infoUser;
-                [infoUser] = await AdminModel.get(akun_id);
-                req.session.nama = [infoUser].nama
+                [info_user] = await AdminModel.get(akun_id);
+                req.session.nama = [info_user].nama;
             }
     
             res.redirect('/' + role);

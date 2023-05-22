@@ -5,8 +5,10 @@ const index = (req, res) => {
 };
 
 const daftarPemilu = async (req, res) => {
-    
-    res.render('/pemilih/daftar-pemilu.ejs');
+    const pemilu = await PemilihModel.getPemilu(req.session.role_id);
+    res.render('pemilih/daftar-pemilu.ejs', {
+        pemilu: pemilu
+    });
 };
 
 export {

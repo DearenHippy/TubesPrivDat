@@ -28,7 +28,7 @@ const get = async (akun_id) => {
     });
 }
 
-const getPemilu = async (akun_id) => {
+const getPemilu = async (id) => {
     const conn = await DB.getConnection();
     const sql = `
         SELECT
@@ -36,12 +36,27 @@ const getPemilu = async (akun_id) => {
         FROM
             (
                 SELECT
+                    pemilihan_id
                 FROM
                     terdaftar
-            )
+                WHERE
+                    pemilih_id = ?
+            ) AS idPemilihan INNER JOIN pemilihan
+                ON idPemilihan.pemilihan_id = pemilihan.pemilihan_id
     `;
+
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [`${id}`], (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
 };
 
 export {
-    get
+    get,
+    getPemilu
 };
