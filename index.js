@@ -1,11 +1,11 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import path from 'path';
 import bodyParser from 'body-parser';
 import * as UserSessionController from './controllers/user-session.js';
 import * as LoginRouter from './routers/login.js';
 import * as CalonRouter from './routers/calon.js';
 import * as AdminRouter from './routers/admin.js';
+import * as LogoutRouter from './routers/logout.js';
 
 const app = express();
 dotenv.config({
@@ -28,6 +28,7 @@ app.set('view engine', 'ejs');
 
 
 app.use('/login', LoginRouter.router);
+app.use('/logout', LogoutRouter.router);
 app.use('/calon', CalonRouter.router);
 app.use('/admin', AdminRouter.router);
 

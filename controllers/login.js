@@ -20,28 +20,30 @@ const login = async (req, res) => {
         req.session.username = username;
         req.session.role = role;
 
-        if (role !== 'admin') {
-            let infoUser;
-
-            if (role === 'calon') {
-                [infoUser] = await CalonModel.get(akun_id);
-            } else {
-                [infoUser] = await PemilihModel.get(akun_id);
+        let infoUser;
+        try {
+            if (role !== 'admin') {
+                let infoUser;
+    
+                if (role === 'calon') {
+                    [infoUser] = await CalonModel.get(akun_id);
+                } else {
+                    [infoUser] = await PemilihModel.get(akun_id);
+                }
+    
+                req.session.nama = [infoUser].nama
             }
-
-            req.session.nama = [infoUser].nama
+            else{
+                let infoUser;
+                [infoUser] = await AdminModel.get(akun_id);
+                req.session.nama = [infoUser].nama
+            }
+    
+            res.redirect('/' + role);
+        } catch (error) {
+            console.error(error)
         }
-        else{
-            let infoUser;
-            [infoUser] = await AdminModel.get(akun_id);
-            req.session.nama = [infoUser].nama
-        }
-
-        res.redirect('/' + role);
-    } else {
-        console.error(err)
     }
-
 };
 
 export {
