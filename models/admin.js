@@ -22,6 +22,26 @@ const get = async (akun_id) => {
     });
 }
 
+const getAdminPemilu = async() => {
+    const conn = await DB.getConnection();
+    const sql = `
+        SELECT
+            *
+        FROM
+            pemilihan
+    `;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
 export {
-    get
+    get,
+    getAdminPemilu
 };

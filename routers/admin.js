@@ -8,6 +8,8 @@ router.get('/', UserSessionController.authenticate, UserSessionController.author
 
 router.get('/home', UserSessionController.authenticate, UserSessionController.authorize, AdminController.home);
 
+router.get('/calon', UserSessionController.authenticate, UserSessionController.authorize, AdminController.calon);
+
 export {
     router
 };

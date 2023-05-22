@@ -6,15 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/general.css">
-    <title>E-Pemilu | Home</title>
+    <title>E-Pemilu | Admin Home</title>
 </head>
 
 <body>
     <%- include('../partials/header.ejs') %>
     <main>
-        Content Admin
+        <div id="container">
+            <!--loop daftar pemilihan-->
+            <% for(const row of table) { %>
+            <form method="post" action="model">
+                <button class="button" type="submit">
+                    <div class="card">
+                        <p id="nama"><%=row.nama%></p>
+                        <input id="id" name="idPemilihan" value="<%= row.pemilihan_id%>" hidden>
+                    </div>
+                </button> 
+            </form>
+            <% } %>
+        </div>
     </main>
-    <%- include('../partials/sidebar.ejs') %>
+    <%- include('../partials/sidebar-admin.ejs') %>
 </body>
 
 </html>
