@@ -9,7 +9,7 @@ router.get('/', UserSessionController.auth(role), AdminController.index);
 
 router.get('/home', UserSessionController.auth(role), AdminController.home);
 
-router.get('/calon', UserSessionController.authenticate, UserSessionController.authorize, AdminController.calon);
+router.get('/calon', UserSessionController.auth(role), AdminController.calon);
 
 export {
     router
