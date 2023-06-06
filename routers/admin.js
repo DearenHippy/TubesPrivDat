@@ -17,6 +17,10 @@ router.post('/detailCalon', UserSessionController.auth(role),  AdminController.d
 
 router.post('/detailPemilih', UserSessionController.auth(role),  AdminController.detailPemilih);
 
+router.post('/daerah',UserSessionController.auth(role),  AdminController.getDaerah)
+
+router.post('/editPemilih',UserSessionController.auth(role),  AdminController.editPemilih)
+
 export {
     router
 };

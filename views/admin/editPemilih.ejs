@@ -15,6 +15,7 @@
         <div id="container">
             <!--loop daftar pemilihan-->
             <form method="post" action="editPemilih">
+                <input type="text" name="id" value="<%= row[0].pemilih_id%>" hidden>
                 <label for="nama">Nama</label>
                 <input type="text" name="nama" value="<%= row[0].nama%>">
                 <label for="umur">Umur</label>
@@ -25,17 +26,21 @@
                 <input type="text" name="alamat" value="<%= row[0].alamat%>">
                 <label for="pendidikan">Pendidikan</label>
                 <input type="text" name="pendidikan" value="<%= row[0].pendidikan%>">
-                <label for="desar">Desa</label>
-                <input type="text" name="desa" value="<%= row[0].nama_desa%>">
+                <label for="desa">Desa</label>
+                <select name="desa" id="desa">
+                    <% for(const desa of table) { %>
+                    <option value="<%= desa.nama%>"><%= desa.nama%></option>
+                    <%}%>
+                </select>
                 <label for="kota">Kota</label>
-                <input type="text" name="kota" value="<%= row[0].nama_kota%>">
+                <input type="text" name="kota" id="kota" value="" readonly>
                 <label for="provinsi">Provinsi</label>
-                <input type="text" name="provinsi" value="<%= row[0].nama_provinsi%>">
+                <input type="text" name="provinsi" id="provinsi" value="" readonly>
                 <button type="submit">Submit</button>
             </form>
         </div>
     </main>
     <%- include('../partials/sidebar-admin.ejs') %>
+    <script type="module" src="daerah.js"></script>
 </body>
-
 </html>

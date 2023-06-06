@@ -34,9 +34,29 @@ const detailCalon = async(req, res) => {
 
 const detailPemilih = async(req, res) => {
     const detail = await Model.getDetailPemilih(req.body.idPemilih);
+    const desa = await Model.getDesa()
     res.render('admin/editPemilih.ejs',{
-        row: detail
+        row: detail,
+        table: desa
     });
+};
+
+const getDaerah = async(req, res) => {
+    const detail = await Model.getDaerah(req.body.param1);
+    res.json(detail)
+};
+
+const editPemilih = async(req,res) => {
+    const update = await Model.updatePemilih(
+        req.body.nama,
+        req.body.umur,
+        req.body.jenis_kelamin,
+        req.body.alamat,
+        req.body.pendidikan,
+        req.body.desa,
+        req.body.id
+    )
+    res.render('admin/pemilih.ejs')
 };
 
 export {
@@ -45,5 +65,7 @@ export {
     calon,
     pemilih,
     detailCalon,
-    detailPemilih
+    detailPemilih,
+    getDaerah,
+    editPemilih
 }

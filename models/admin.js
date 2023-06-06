@@ -75,10 +75,7 @@ const getAdminPemilih = async() => {
 
 const getDetailPemilih = async(idPemilih) => {
     const conn = await DB.getConnection();
-    const sql = `SELECT pemilih.nama,pemilih.umur,pemilih.jenis_kelamin,pemilih.alamat,pemilih.pendidikan,
-                desa.nama as 'nama_desa',kota.nama as 'nama_kota',provinsi.nama as 'nama_provinsi'
-                FROM pemilih INNER JOIN desa ON desa.desa_id = pemilih.desa_id INNER JOIN kota ON kota.kota_id = desa.kota_id 
-                INNER JOIN provinsi ON provinsi.provinsi_id = kota.provinsi_id WHERE pemilih.pemilih_id = ?`;
+    const sql = `SELECT pemilih.pemilih_id,pemilih.nama,pemilih.umur,pemilih.jenis_kelamin,pemilih.alamat,pemilih.pendidikan FROM pemilih WHERE pemilih.pemilih_id = ?`;
     return new Promise((resolve, reject) => {
         conn.query(sql,  [`${idPemilih}`], (error, res) => {
             if (error) {
@@ -105,11 +102,58 @@ const getDetailCalon = async(idCalon) => {
     });
 }
 
+const getDesa = async() => {
+    const conn = await DB.getConnection();
+    const sql = `SELECT desa.desa_id,desa.nama FROM desa`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
+const getDaerah = async(namaDesa) => {
+    const conn = await DB.getConnection();
+    const sql = `SELECT desa.nama as 'nama_desa',kota.nama as 'nama_kota',provinsi.nama as 'nama_provinsi'
+                FROM pemilih INNER JOIN desa ON desa.desa_id = pemilih.desa_id INNER JOIN kota ON kota.kota_id = desa.kota_id 
+                INNER JOIN provinsi ON provinsi.provinsi_id = kota.provinsi_id WHERE desa.nama = ?`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [`${namaDesa}`],  (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
+const updatePemilih = async(namaPemilih,umur,jenis_kelamin,alamat,pendidikan,namaDesa,idPemilih) => {
+    const conn = await DB.getConnection();
+    const sql = `UPDATE pemilih SET nama = \?\, umur = ?, jenis_kelamin = \?\, alamat = \?\, pendidikan = \?\, desa_id = (SELECT desa_id FROM desa WHERE nama = \?\) WHERE pemilih_id = ?`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [`${namaPemilih}`,Number(umur),`${jenis_kelamin}`,`${alamat}`,`${pendidikan}`,`${namaDesa}`,Number(idPemilih)],  (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
 export {
     get,
     getAdminPemilu,
     getAdminCalon,
     getAdminPemilih,
     getDetailCalon,
-    getDetailPemilih
+    getDetailPemilih,
+    getDesa,
+    getDaerah,
+    updatePemilih
 };
