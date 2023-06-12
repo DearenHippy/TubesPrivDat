@@ -56,7 +56,10 @@ const editPemilih = async(req,res) => {
         req.body.desa,
         req.body.id
     )
-    res.render('admin/pemilih.ejs')
+    const allPemilih = await Model.getAdminPemilih();
+    res.render('admin/pemilih.ejs',{
+        table: allPemilih
+    })
 };
 
 export {
