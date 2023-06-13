@@ -24,7 +24,9 @@ const get = async (akun_id) => {
             } else {
                 resolve(res)
             }
-        })
+        });
+
+        conn.release();
     });
 }
 

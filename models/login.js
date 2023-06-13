@@ -19,7 +19,9 @@ const get = async (username, password) => {
             } else {
                 resolve(res)
             }
-        })
+        });
+
+        conn.release();
     });
 }
 

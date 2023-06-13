@@ -23,7 +23,6 @@ const init = (app) => {
 
 const auth = (role) => {
     return (req, res, next) => {
-        console.log('login');
         if (req.session.role === undefined) {
             res.redirect('/login');
         } else {
