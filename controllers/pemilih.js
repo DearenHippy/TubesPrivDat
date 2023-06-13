@@ -76,8 +76,9 @@ const index = (req, res) => {
 const daftarPemilu = async (req, res) => {
     const pemilu = await PemilihModel.getPemiluUser(req.session.role_id);
     const status = await PemilihModel.getStatusUser(req.session.role_id);
-    var arrStatus = []
-    for(var i = 0;i<status.length;i++){
+    
+    let arrStatus = []
+    for(let i = 0; i < status.length; i++){
         arrStatus.push(status[i].pemilihan_id)
     }
     
