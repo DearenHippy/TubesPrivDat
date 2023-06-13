@@ -48,10 +48,17 @@
                 <div class="row row-cols-auto">
                     <% pemilu.forEach((element) => { %>
                     <div class="col card m-2" style="width: 18rem;">
+                        <% if(status.includes(element.pemilihan_id)) { %>
                         <div class="card-body">
                             <h5 class="card-title"><%= element.nama %></h5>
-                            <a href="/pemilih/pemilu/mulai/<%= element.pemilihan_id %>" class="btn btn-primary">Mulai</a>
+                            <a href="/pemilih/pemilu/mulai/<%= element.pemilihan_id %>" class="btn disabled">Mulai</a>
                         </div>
+                        <% }else{ %>
+                        <div class="card-body" aria-disabled="false">
+                            <h5 class="card-title"><%= element.nama %></h5>
+                            <a href="/pemilih/pemilu/mulai/<%= element.pemilihan_id %>" class="btn btn-primary" aria-disabled="true">Mulai</a>
+                        </div>
+                        <% } %>
                     </div>
                     <% }); %>
                 </div>

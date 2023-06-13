@@ -60,6 +60,30 @@ const getPemiluUser = async (id) => {
     });
 };
 
+const getStatusUser = async (id) => {
+    const conn = await DB.getConnection();
+    const sql = `
+        SELECT
+            pemilihan_id
+        FROM
+            status_memilih
+        WHERE
+            pemilih_id = ?
+    `;
+
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [`${id}`], (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        });
+
+        conn.release();
+    });
+};
+
 const getCalonTerdaftar = async (id) => {
     const conn = await DB.getConnection();
     const sql = `
@@ -221,6 +245,7 @@ const updateMemilih = async (pemilih_id, calon_id, suara_id) => {
 export {
     get,
     getPemiluUser,
+    getStatusUser,
     getCalonTerdaftar,
     insertSuara,
     getLatestSuaraId,
