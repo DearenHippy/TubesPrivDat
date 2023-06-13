@@ -38,6 +38,10 @@ const anonimizeData = (umur, pendidikan) => {
 };
 
 const anonimizeUmur = (umur) => {
+    if (umur === -1) {
+        return null;
+    }
+    
     if(umur >= 17 && umur <= 30){
         return "17-20";
     } else if (umur > 30 && umur <= 50) {
@@ -50,6 +54,10 @@ const anonimizeUmur = (umur) => {
 };
 
 const anonimizePendidikan = (pendidikan) => {
+    if (pendidikan === -1) {
+        return null;
+    }
+    
     if (pendidikan === "SD") {
         return "Pendidikan Dasar";
     } else if (pendidikan === "SMP" || pendidikan === "SMA") {
@@ -113,26 +121,26 @@ const pilihPemilu = async (req, res) => {
 
 const abstainPemilu = async (req, res) => {
     const akun_id = req.session.akun_id;
-    const pasangan_calon = req.body['pasangan-calon'];
     const pemilihan_id = req.session.pemilihan_id;
+
+    const pasangan_calon = await PemilihModel.getCalonTerdaftar(pemilihan_id);
 
     const [info_user] = await PemilihModel.get(akun_id);
     const pemilih_id = info_user['pemilih_id'];
-    const umur = info_user['umur'] ;
-    const pendidikan = info_user['pendidikan'];
+    const umur = -1;
+    const pendidikan = -1;
     const desa_id = info_user['desa_id'];
 
     const [kota_id] = await PemilihModel.getKotaId(desa_id);
     const [provinsi_id] = await PemilihModel.getProvinsiId(kota_id['kota_id']);
     
-    await PemilihModel.insertSuara(anonimizeData(umur, pendidikan), provinsi_id['provinsi_id']);
-    const [suara_id] = await PemilihModel.getLatestSuaraId();
-
-    const calon_ids = await PemilihModel.getCalonId(pasangan_calon, pemilihan_id);
-
+    const calon_ids = pasangan_calon.map(({ calon_id }) => calon_id);
+    
     for(let i = 0; i < calon_ids.length; i++) {
-        await PemilihModel.updateMemilih(pemilih_id, calon_ids[i]['calon_id'], suara_id['suara_id']);
+        await PemilihModel.insertSuara(anonimizeData(umur, pendidikan), pemilihan_id, calon_ids[i], provinsi_id['provinsi_id']);
     };
+
+    await PemilihModel.updateStatusMemilih(pemilih_id, pemilihan_id);
 
     res.redirect('/pemilih/pemilu');
 };
