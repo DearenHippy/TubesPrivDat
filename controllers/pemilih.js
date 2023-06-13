@@ -100,14 +100,13 @@ const pilihPemilu = async (req, res) => {
     const [kota_id] = await PemilihModel.getKotaId(desa_id);
     const [provinsi_id] = await PemilihModel.getProvinsiId(kota_id['kota_id']);
     
-    await PemilihModel.insertSuara(anonimizeData(umur, pendidikan), provinsi_id['provinsi_id']);
-    const [suara_id] = await PemilihModel.getLatestSuaraId();
-
     const calon_ids = await PemilihModel.getCalonId(pasangan_calon, pemilihan_id);
-
+    
     for(let i = 0; i < calon_ids.length; i++) {
-        await PemilihModel.updateMemilih(pemilih_id, calon_ids[i]['calon_id'], suara_id['suara_id']);
+        await PemilihModel.insertSuara(anonimizeData(umur, pendidikan), pemilihan_id, calon_ids[i]['calon_id'], provinsi_id['provinsi_id']);
     };
+
+    await PemilihModel.updateStatusMemilih(pemilih_id, pemilihan_id);
 
     res.redirect('/pemilih/pemilu');
 };

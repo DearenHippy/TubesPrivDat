@@ -178,16 +178,16 @@ const getLatestSuaraId = async () => {
     });
 };
 
-const insertSuara = async (anonimized_data, provinsi_id) => {
+const insertSuara = async (anonimized_data, pemilihan_id, calon_id, provinsi_id) => {
     const conn = await DB.getConnection();
     const umur = anonimized_data[0];
     const pendidikan = anonimized_data[1];
     const sql = `
-        INSERT INTO suara(umur, pendidikan, provinsi_id)
-        VALUES (?, ?, ?);
+        INSERT INTO suara(pemilihan_id, calon_id, umur, pendidikan, provinsi_id)
+        VALUES (?, ?, ?, ?, ?);
     `;
     return new Promise((resolve, reject) => {
-        conn.query(sql, [`${umur}`, `${pendidikan}`, `${provinsi_id}`], (error, res) => {
+        conn.query(sql, [`${pemilihan_id}`, `${calon_id}`, `${umur}`, `${pendidikan}`, `${provinsi_id}`], (error, res) => {
             if (error) {
                 reject(error)
             } else {
@@ -199,14 +199,15 @@ const insertSuara = async (anonimized_data, provinsi_id) => {
     });
 };
 
-const updateMemilih = async (pemilih_id, calon_id, suara_id) => {
+const updateStatusMemilih = async (pemilih_id, pemilihan_id) => {
     const conn = await DB.getConnection();
     const sql = `
-        INSERT INTO memilih(pemilih_id, calon_id, suara_id)
-        VALUES (?, ?, ?);
+        INSERT INTO status_memilih(pemilih_id, pemilihan_id)
+        VALUES (?, ?);
     `;
+
     return new Promise((resolve, reject) => {
-        conn.query(sql, [`${Number(pemilih_id)}`, `${Number(calon_id)}`, `${Number(suara_id)}`], (error, res) => {
+        conn.query(sql, [`${Number(pemilih_id)}`, `${Number(pemilihan_id)}`], (error, res) => {
             if (error) {
                 reject(error)
             } else {
@@ -224,7 +225,7 @@ export {
     getCalonTerdaftar,
     insertSuara,
     getLatestSuaraId,
-    updateMemilih,
+    updateStatusMemilih,
     getCalonId,
     getProvinsiId,
     getKotaId
