@@ -70,9 +70,9 @@
                     <% table.forEach((element) => { %>
                     <div class="col card m-2" style="width: 18rem;">
                         <div class="card-body">
-                            <form method="post" action="detailPemilih">
+                            <form method="post" action="detailPemilihan">
                                 <h5 class="card-title"><%= element.nama %></h5>
-                                <input id="id" name="idPemilih" value="<%= element.pemilihan_id%>" hidden>
+                                <input id="id" name="pemilihan_id" value="<%= element.pemilihan_id%>" hidden>
                                 <input class="btn btn-primary" type="submit" value="Edit">
                             </form>
                         </div>

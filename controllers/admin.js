@@ -62,6 +62,19 @@ const editPemilih = async(req,res) => {
     })
 };
 
+const detailPemilihan = async(req,res) => {
+    const pemilihan = await Model.getPemilihan(req.body.pemilihan_id)
+    const calon = await Model.getCalonPemilihan(req.body.pemilihan_id)
+    res.render('admin/editPemilihan.ejs',{
+        pemilihan: pemilihan,
+        calon: calon
+    })
+};
+
+const tambahCalonPemilihan = async(req,res) => {
+    res.render('admin/tambahCalonPemilihan.ejs')
+};
+
 export {
     home,
     index,
@@ -70,5 +83,7 @@ export {
     detailCalon,
     detailPemilih,
     getDaerah,
-    editPemilih
+    editPemilih,
+    detailPemilihan,
+    tambahCalonPemilihan
 }

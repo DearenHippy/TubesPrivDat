@@ -146,6 +146,48 @@ const updatePemilih = async(namaPemilih,umur,jenis_kelamin,alamat,pendidikan,nam
     });
 }
 
+const getPemilihan = async(pemilihanId) => {
+    const conn = await DB.getConnection();
+    const sql = `SELECT * FROM pemilihan WHERE pemilihan_id = ?`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [Number(pemilihanId)],  (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
+const getCalonPemilihan = async(pemilihanId) => {
+    const conn = await DB.getConnection();
+    const sql = `SELECT * FROM calon WHERE pemilihan_id = ?`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [Number(pemilihanId)],  (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
+const getCalonBelumTerdaftar = async() => {
+    const conn = await DB.getConnection();
+    const sql = `SELECT * FROM calon WHERE pemilihan_id = ?`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [Number(pemilihanId)],  (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
 export {
     get,
     getAdminPemilu,
@@ -155,5 +197,7 @@ export {
     getDetailPemilih,
     getDesa,
     getDaerah,
-    updatePemilih
+    updatePemilih,
+    getPemilihan,
+    getCalonPemilihan
 };
