@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
+import multer from 'multer';
 import * as UserSessionController from './controllers/user-session.js';
 import * as LoginRouter from './routers/login.js';
 import * as LogoutRouter from './routers/logout.js';

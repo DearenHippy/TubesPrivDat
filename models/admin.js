@@ -216,6 +216,76 @@ const tambahPemilu = async(nama, mulai, selesai, jenis) => {
     });
 }
 
+const getAllPemilihan = async(nama, mulai, selesai, jenis) => {
+    const conn = await DB.getConnection();
+    const sql = `SELECT * FROM pemilihan`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [`${nama}`,`${mulai}`,`${selesai}`,`${jenis}`],  (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
+const getNoUrutLast = async(namaPemilihan) => {
+    const conn = await DB.getConnection();
+    const sql = `SELECT no_urut FROM calon INNER JOIN pemilihan ON pemilihan.pemilihan_id = calon.pemilihan_id WHERE pemilihan.pemilihan_id = (SELECT pemilihan_id FROM pemilihan WHERE nama = ? ) ORDER BY no_urut DESC LIMIT 1;`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [`${namaPemilihan}`],  (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
+const tambahCalon = async(nama, path_foto, no_urut, nama_pemilihan) => {
+    const conn = await DB.getConnection();
+    const sql = `INSERT INTO calon(nama,path_foto,no_urut,pemilihan_id) VALUES(?,?,?,(SELECT pemilihan_id FROM pemilihan WHERE nama = ?));`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [`${nama}`,`${path_foto}`,`${no_urut}`,`${nama_pemilihan}`],  (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
+const tambahAkunCalon = async(username) => {
+    const conn = await DB.getConnection();
+    const sql = `INSERT INTO akun(username,password,role) VALUES(?,'XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=','calon')`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [`${username}`],  (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
+const tambahAkunCalon2 = async(username) => {
+    const conn = await DB.getConnection();
+    const sql = `INSERT INTO akun_calon(akun_id,calon_id) VALUES((SELECT akun_id FROM akun WHERE username = ?),(SELECT calon_id FROM calon WHERE nama = ?))`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [`${username}`,`${username}`],  (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
 export {
     get,
     getAdminPemilu,
@@ -229,5 +299,10 @@ export {
     getPemilihan,
     getCalonPemilihan,
     getJenisPemilihan,
-    tambahPemilu
+    tambahPemilu,
+    getAllPemilihan,
+    getNoUrutLast,
+    tambahCalon,
+    tambahAkunCalon,
+    tambahAkunCalon2
 };

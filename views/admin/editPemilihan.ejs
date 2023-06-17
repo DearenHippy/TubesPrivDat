@@ -66,45 +66,25 @@
         </div>
         <!-- Page content wrapper-->
         <div id="page-content-wrapper">
-            <!-- Page content-->
-            <div class="container-fluid">
-                <h1 class="mt-4 text-center"><%= pemilihan[0].nama %></h1>
-                <form action="/pemilih/pemilu/pilih" method="post" id="form-pemilihan">                    
-                    <div class="row justify-content-center align-items-center">
-                        <% let i = 0; %>
-                        <% while(i < calon.length) { %>
-                            <div class="col-md-4 col-lg-4 col-sm-4" style="width: 32rem;">
-                                <label>
-                                    <input type="radio" name="pasangan-calon" class="card-input-element" value="<%= (i/2)+1 %>">
-                                    <div class="card card-default card-input">
-                                        <div class="card-header">Nomor urut: <%= (i/2)+1 %></div>
-                                        <div class="card-body">
-                                            <div class="d-flex flex-row justify-content-center">
-                                                <% let j = 0 %>
-                                                <% while (j < 2) { %>
-                                                    <div class="container d-flex flex-column justify-content-center align-items-center">
-                                                        <img src="<%= calon[i+j].path_foto %>" class="card-img foto">
-                                                        <h5 class="card-title">Calon <%= calon[i+j].jenis %></h5>
-                                                        <p class="card-text"><%= calon[i+j].nama %></p>
-                                                    </div>
-                                                    <% j += 1; %>
-                                                <% } %>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
-                                <% i += 2 %> 
-                            </div>
-                        <% } %>
-                    </div>
-                </form>
-                <div class="d-flex flex-row justify-content-end button">
-                    <a class="btn btn-primary" href="/admin/tambahCalonPemilihan" role="button">Tambah Calon</a>   
+            <% let i = 0; %>
+            <% while(i < calon.length) { %>
+            <div class="card">
+                <div class="card-header">
+                    Nomor urut: <%= (i/2)+1 %>
                 </div>
-            </div>
+                <div class="card-body">
+                  <% let j = 0 %>
+                  <% while (j < 2) { %>
+                  <h5 class="card-title">Calon <%= j+1 %></h5>
+                  <p class="card-text"><%= calon[i+j].nama %></p>
+                  <% j += 1; %>
+                  <% } %>
+                </div>
+              </div>
+            <% i += 2 %>
+            <% } %>  
         </div>
     </div>
-
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
