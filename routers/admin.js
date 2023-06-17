@@ -43,6 +43,12 @@ router.get('/tambahCalonPemilihan',UserSessionController.auth(role), AdminContro
 
 router.post('/tambahCalon', upload.fields([{name:'fotoCalon1',maxCount:1},{name:'fotoCalon2',maxCount:1}]), UserSessionController.auth(role),  AdminController.tambahCalon);
 
+router.get('/tambahPemilihPemilihan',UserSessionController.auth(role), AdminController.tambahPemilihPemilihan);
+
+router.post('/daftarPemilih',UserSessionController.auth(role), AdminController.daftarPemilih);
+
+router.post('/editCalon',upload.single('foto') ,UserSessionController.auth(role), AdminController.editCalon);
+
 export {
     router
 };

@@ -286,6 +286,34 @@ const tambahAkunCalon2 = async(username) => {
     });
 }
 
+const daftarPemilih = async(idPemilih,namaPemilihan) => {
+    const conn = await DB.getConnection();
+    const sql = `INSERT INTO terdaftar(pemilih_id,pemilihan_id) VALUES(?,(SELECT pemilihan_id FROM pemilihan WHERE nama = ?))`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [Number(idPemilih),`${namaPemilihan}`],  (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
+const editCalon = async(nama,path_foto,id) => {
+    const conn = await DB.getConnection();
+    const sql = `UPDATE calon SET nama = ?,path_foto = ? WHERE calon_id = ?`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [`${nama}`,`${path_foto}`,Number(id)],  (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
 export {
     get,
     getAdminPemilu,
@@ -304,5 +332,7 @@ export {
     getNoUrutLast,
     tambahCalon,
     tambahAkunCalon,
-    tambahAkunCalon2
+    tambahAkunCalon2,
+    daftarPemilih,
+    editCalon
 };

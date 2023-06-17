@@ -122,6 +122,38 @@ const tambahCalonPemilihan = async(req,res)=>{
     });
 };
 
+const tambahPemilihPemilihan = async(req,res)=>{
+    const pemilih = await Model.getAdminPemilih()
+    const allPemilihan = await Model.getAllPemilihan()
+    res.render('admin/tambahPemilihPemilihan.ejs',{
+        pemilih: pemilih,
+        pemilihan: allPemilihan
+    });
+};
+
+const daftarPemilih = async(req,res)=>{
+    const idTerpilih = req.body.terpilih;
+    const namaPemilihan = req.body.nama_pemilihan;
+    for(let i = 0;i<idTerpilih.length;i++){
+        await Model.daftarPemilih(idTerpilih[i],namaPemilihan)
+    }
+    const allPemilihan = await Model.getAdminPemilu();
+    res.render('admin/home.ejs',{
+        table: allPemilihan
+    });
+};
+
+const editCalon = async(req,res)=>{
+    const foto = "/images/calon/"+req.file.originalname;
+    const nama = req.body.nama;
+    const id = req.body.id;
+    await Model.editCalon(nama,foto,id)
+    const allPemilihan = await Model.getAdminPemilu();
+    res.render('admin/home.ejs',{
+        table: allPemilihan
+    });
+};
+
 export {
     home,
     index,
@@ -135,5 +167,8 @@ export {
     tambahPemilihan,
     tambahPemilu,
     tambahCalonPemilihan,
-    tambahCalon
+    tambahCalon,
+    tambahPemilihPemilihan,
+    daftarPemilih,
+    editCalon
 }
