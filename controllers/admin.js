@@ -71,8 +71,23 @@ const detailPemilihan = async(req,res) => {
     })
 };
 
-const tambahCalonPemilihan = async(req,res) => {
-    res.render('admin/tambahCalonPemilihan.ejs')
+const tambahPemilihan = async(req,res) => {
+    const jenisPemilihan = await Model.getJenisPemilihan();
+    res.render('admin/tambahPemilihan.ejs',{
+        jenis: jenisPemilihan
+    })
+};
+
+const tambahPemilu = async(req,res) => {
+    const namaPemilihan = req.body.namaPemilihan[0];
+    const mulai = req.body.namaPemilihan[1].replace(/T/g,' ');
+    const selesai = req.body.namaPemilihan[2].replace(/T/g,' ');
+    const jenis = req.body.desa;
+    await Model.tambahPemilu(namaPemilihan,mulai,selesai,jenis);
+    const allPemilihan = await Model.getAdminPemilu();
+    res.render('admin/home.ejs',{
+        table: allPemilihan
+    });
 };
 
 export {
@@ -85,5 +100,6 @@ export {
     getDaerah,
     editPemilih,
     detailPemilihan,
-    tambahCalonPemilihan
+    tambahPemilihan,
+    tambahPemilu
 }

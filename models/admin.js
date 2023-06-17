@@ -188,6 +188,34 @@ const getCalonBelumTerdaftar = async() => {
     });
 }
 
+const getJenisPemilihan = async() => {
+    const conn = await DB.getConnection();
+    const sql = `SELECT * FROM jenis_pemilihan`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql,(error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
+const tambahPemilu = async(nama, mulai, selesai, jenis) => {
+    const conn = await DB.getConnection();
+    const sql = `INSERT INTO pemilihan(nama,tgl_mulai,tgl_selesai,jenis_pemilihan_id) VALUES(?,?,?,(SELECT jenis_pemilihan_id FROM jenis_pemilihan WHERE jenis = ?))`;
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [`${nama}`,`${mulai}`,`${selesai}`,`${jenis}`],  (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        })
+    });
+}
+
 export {
     get,
     getAdminPemilu,
@@ -199,5 +227,7 @@ export {
     getDaerah,
     updatePemilih,
     getPemilihan,
-    getCalonPemilihan
+    getCalonPemilihan,
+    getJenisPemilihan,
+    tambahPemilu
 };

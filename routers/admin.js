@@ -23,7 +23,9 @@ router.post('/editPemilih',UserSessionController.auth(role),  AdminController.ed
 
 router.post('/detailPemilihan',UserSessionController.auth(role), AdminController.detailPemilihan);
 
-router.get('/tambahCalonPemilihan',UserSessionController.auth(role), AdminController.tambahCalonPemilihan);
+router.get('/tambahPemilihan',UserSessionController.auth(role), AdminController.tambahPemilihan);
+
+router.post('/tambahPemilu',UserSessionController.auth(role),  AdminController.tambahPemilu);
 
 export {
     router
