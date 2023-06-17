@@ -204,8 +204,8 @@ const getLatestSuaraId = async () => {
 
 const insertSuara = async (anonimized_data, pemilihan_id, calon_id, provinsi_id) => {
     const conn = await DB.getConnection();
-    const umur = anonimized_data[0];
-    const pendidikan = anonimized_data[1];
+    let umur = anonimized_data[0];
+    let pendidikan = anonimized_data[1];
     const sql = `
         INSERT INTO suara(pemilihan_id, calon_id, umur, pendidikan, provinsi_id)
         VALUES (?, ?, ?, ?, ?);

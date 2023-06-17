@@ -9,6 +9,8 @@ router.get('/', UserSessionController.auth(role), CalonController.index);
 
 router.get('/insight', UserSessionController.auth(role), CalonController.insight);
 
+router.get('/fetch-graph-data/:type', UserSessionController.auth(role), CalonController.fetchGraphData)
+
 export {
     router
 };

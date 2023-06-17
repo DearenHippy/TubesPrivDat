@@ -39,7 +39,7 @@ const anonimizeData = (umur, pendidikan) => {
 
 const anonimizeUmur = (umur) => {
     if (umur === -1) {
-        return null;
+        return "NULL";
     }
     
     if(umur >= 17 && umur <= 30){
@@ -55,7 +55,7 @@ const anonimizeUmur = (umur) => {
 
 const anonimizePendidikan = (pendidikan) => {
     if (pendidikan === -1) {
-        return null;
+        return "NULL";
     }
     
     if (pendidikan === "SD") {

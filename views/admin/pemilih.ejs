@@ -83,17 +83,17 @@
                         <% table.forEach((element) => { %> 
                         <tr>
                             <form method="post" action="detailPemilih">
-                            <td hidden><input id="id" name="idPemilih" value="<%= element.pemilih_id%>" hidden></td>
-                            <td><%= element.pemilih_id%></td>
-                            <td><%= element.nama %></td>
-                            <td><%= element.umur %></td>
-                            <td><%= element.jenis_kelamin %></td>
-                            <td><%= element.alamat %></td>
-                            <td><%= element.pendidikan %></td>
-                            <td><%= element.nama_desa %></td>
-                            <td><%= element.nama_kota %></td>
-                            <td><%= element.nama_provinsi %></td>
-                            <td><input class="btn btn-primary" type="submit" value="Edit"></td>
+                                <td hidden><input id="id" name="idPemilih" value="<%= element.pemilih_id%>" hidden></td>
+                                <td><%= element.pemilih_id%></td>
+                                <td><%= element.nama %></td>
+                                <td><%= element.umur %></td>
+                                <td><%= element.jenis_kelamin %></td>
+                                <td><%= element.alamat %></td>
+                                <td><%= element.pendidikan %></td>
+                                <td><%= element.nama_desa %></td>
+                                <td><%= element.nama_kota %></td>
+                                <td><%= element.nama_provinsi %></td>
+                                <td><input class="btn btn-primary" type="submit" value="Edit"></td>
                             </form>
                         </tr>
                         <% }); %>
