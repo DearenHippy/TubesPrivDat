@@ -70,7 +70,7 @@ const getInsight = async (calon_id, pemilihan_id, type) => {
         ) as himp
         GROUP BY himp.${type};
     `;
-    
+
 
     return new Promise((resolve, reject) => {
         conn.query(sql, (error, res) => {
@@ -85,8 +85,86 @@ const getInsight = async (calon_id, pemilihan_id, type) => {
     });
 };
 
+const getNumberOfVoter = async (pemilihan_id) => {
+    const conn = await DB.getConnection();
+    const sql = `
+        SELECT
+            COUNT(pemilihan_id) AS 'num'
+        FROM
+            terdaftar
+        WHERE
+            pemilihan_id=?
+    `;
+
+
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [Number(pemilihan_id)], (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        });
+
+        conn.release();
+    });
+};
+
+const getNumberOfAbstainVoter = async (calon_id) => {
+    const conn = await DB.getConnection();
+    const sql = `
+        SELECT
+        COUNT(umur) AS 'num'
+        FROM
+            suara
+        WHERE
+            calon_id=? AND umur='NULL'
+    `;
+
+
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [calon_id], (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        });
+
+        conn.release();
+    });
+};
+
+const getNumberOfVotedVoter = async (calon_id) => {
+    const conn = await DB.getConnection();
+    const sql = `
+        SELECT
+        COUNT(umur) AS 'num'
+        FROM
+            suara
+        WHERE
+            calon_id=? AND umur!='NULL'
+    `;
+
+
+    return new Promise((resolve, reject) => {
+        conn.query(sql, [calon_id], (error, res) => {
+            if (error) {
+                reject(error)
+            } else {
+                resolve(res)
+            }
+        });
+
+        conn.release();
+    });
+};
+
 export {
     get,
     getAllPemilihan,
-    getInsight
+    getInsight,
+    getNumberOfVoter,
+    getNumberOfAbstainVoter,
+    getNumberOfVotedVoter
 };

@@ -1,66 +1,31 @@
-console.log("test");
+const proportionChart = document.getElementById("proportion-graph");
+const educationChart = document.getElementById("education-graph");
+const ageChart = document.getElementById("age-graph");
 
-let educationChartData;
-let ageChartData;
-let test_label
-let test_data
-
-const fetchData = (dataType) => {
-    let uri = '/calon/fetch-graph-data/'+dataType;
-    fetch(uri, {
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(response => {
-        if(dataType === 'education') {
-            test_label = response[0].label;
-            test_data = response[0].data; 
-            educationChartData = {
-                label: response.label,
-                data: response.data
-            };
-        } else {
-            ageChartData = {
-                label: response.label,
-                data: response.data
-            };
-        }
-    })
-};
-
-fetchData('umur');
-fetchData('pendidikan');
-
-// const chrt = document.getElementById("graph");
-const educationChart = document.getElementById("age-graph");
-const ageChart = document.getElementById("education-graph");
-
-// let graph = new Chart(chrt, {
-//     type: 'bar',
-//     data: {
-//         labels: ["HTML", "CSS", "JAVASCRIPT", "CHART.JS", "JQUERY", "BOOTSTRP"],
-//         datasets: [{
-//             label: "online tutorial subjects",
-//             data: [9, 8, 10, 7, 6, 12],
-//         }],
-//     },
-//     options: {
-//         responsive: true,
-//     },
-// });
+let proportionGraph = new Chart(proportionChart, {
+    type: 'pie',
+    data: {
+        labels: [],
+        datasets: [{
+            data: [],
+            backgroundColor: ['#007bff', '#dc3545', '#808080'],
+        }]
+    },
+    options: {
+        responsive: false,
+    },
+});
 
 let educationGraph = new Chart(educationChart, {
     type: 'bar',
     data: {
-        labels: test_label,
+        labels: [],
         datasets: [{
-            data: test_data,
-        }],
+            label: "Banyak orang",
+            data: [],
+            backgroundColor: "rgba(2,117,216,1)",
+            borderColor: "rgba(2,117,216,1)"
+        }]
     },
     options: {
         responsive: true,
@@ -70,9 +35,12 @@ let educationGraph = new Chart(educationChart, {
 let ageGraph = new Chart(ageChart, {
     type: 'bar',
     data: {
-        labels: ageChartData.label,
+        labels: [],
         datasets: [{
-            data: ageChartData.data,
+            label: "Banyak orang",
+            data: [],
+            backgroundColor: "rgba(2,117,216,1)",
+            borderColor: "rgba(2,117,216,1)"
         }],
     },
     options: {
@@ -80,5 +48,39 @@ let ageGraph = new Chart(ageChart, {
     },
 });
 
-educationGraph.update();
-ageGraph.update();
+const updateChartData = (chartLabel, chartData, chart) => {
+    chart.data.labels = chartLabel;
+    chart.data.datasets[0].data = chartData;
+
+    chart.update();
+};
+
+const fetchData = async (type) => {
+    let uri = '/calon/fetch-graph-data/' + type;
+
+    const response = await fetch(uri, {
+        method: 'GET',
+        dataType: 'json',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const data = await response.json();
+
+    const chartData = data.data;
+    const chartLabel = data.label;
+
+    if (type === 'proporsi') {
+        updateChartData(chartLabel, chartData, proportionGraph);
+    } else if (type === 'pendidikan') {
+        updateChartData(chartLabel, chartData, educationGraph);
+    } else {
+        updateChartData(chartLabel, chartData, ageGraph);
+    }
+};
+
+await fetchData('proporsi');
+await fetchData('umur');
+await fetchData('pendidikan');
