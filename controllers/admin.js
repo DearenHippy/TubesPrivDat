@@ -114,6 +114,7 @@ const pemilih = async(req, res) => {
 const detailCalon = async(req, res) => {
     const detail = await Model.getDetailCalon(req.body.idCalon);
     res.render('admin/editCalon.ejs',{
+        username: req.session.username,
         row: detail
     });
 };
@@ -122,6 +123,7 @@ const detailPemilih = async(req, res) => {
     const detail = await Model.getDetailPemilih(req.body.idPemilih);
     const desa = await Model.getDesa()
     res.render('admin/editPemilih.ejs',{
+        username: req.session.username,
         row: detail,
         table: desa
     });
@@ -144,6 +146,7 @@ const editPemilih = async(req,res) => {
     )
     const allPemilih = await Model.getAdminPemilih();
     res.render('admin/pemilih.ejs',{
+        username: req.session.username,
         table: allPemilih
     })
 };
@@ -152,6 +155,7 @@ const detailPemilihan = async(req,res) => {
     const pemilihan = await Model.getPemilihan(req.body.pemilihan_id)
     const calon = await Model.getCalonPemilihan(req.body.pemilihan_id)
     res.render('admin/editPemilihan.ejs',{
+        username: req.session.username,
         pemilihan: pemilihan,
         calon: calon
     })
@@ -160,6 +164,7 @@ const detailPemilihan = async(req,res) => {
 const tambahPemilihan = async(req,res) => {
     const jenisPemilihan = await Model.getJenisPemilihan();
     res.render('admin/tambahPemilihan.ejs',{
+        username: req.session.username,
         jenis: jenisPemilihan
     })
 };
@@ -172,6 +177,7 @@ const tambahPemilu = async(req,res) => {
     await Model.tambahPemilu(namaPemilihan,mulai,selesai,jenis);
     const allPemilihan = await Model.getAdminPemilu();
     res.render('admin/home.ejs',{
+        username: req.session.username,
         table: allPemilihan
     });
 };
@@ -204,6 +210,7 @@ const tambahCalon = async(req,res)=>{
 const tambahCalonPemilihan = async(req,res)=>{
     const allPemilihan = await Model.getAllPemilihan()
     res.render('admin/tambahCalonPemilihan.ejs',{
+        username: req.session.username,
         pemilihan: allPemilihan
     });
 };
@@ -212,6 +219,7 @@ const tambahPemilihPemilihan = async(req,res)=>{
     const pemilih = await Model.getAdminPemilih()
     const allPemilihan = await Model.getAllPemilihan()
     res.render('admin/tambahPemilihPemilihan.ejs',{
+        username: req.session.username,
         pemilih: pemilih,
         pemilihan: allPemilihan
     });
@@ -225,6 +233,7 @@ const daftarPemilih = async(req,res)=>{
     }
     const allPemilihan = await Model.getAdminPemilu();
     res.render('admin/home.ejs',{
+        username: req.session.username,
         table: allPemilihan
     });
 };
@@ -236,6 +245,7 @@ const editCalon = async(req,res)=>{
     await Model.editCalon(nama,foto,id)
     const allPemilihan = await Model.getAdminPemilu();
     res.render('admin/home.ejs',{
+        username: req.session.username,
         table: allPemilihan
     });
 };
