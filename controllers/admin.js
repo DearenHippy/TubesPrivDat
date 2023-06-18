@@ -30,7 +30,7 @@ const home = async(req, res) => {
 
     const result = allPemilihan.slice(startIndex, endIndex);
     
-    res.render('admin/insight.ejs',{
+    res.render('admin/home.ejs',{
         username: req.session.username,
         previousPage: previousPage,
         nextPage: nextPage,
