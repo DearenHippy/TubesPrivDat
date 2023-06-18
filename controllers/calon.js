@@ -14,14 +14,13 @@ const fetchGraphData = async (req, res) => {
     const [pemilihan_id] = await CalonModel.getAllPemilihan(calon_id);
 
     const ballotInsight = await CalonModel.getInsight(calon_id, pemilihan_id, type);
-    console.log(ballotInsight);
 
     let labels;
     let datas = [0,0,0,0];
     if(type === 'umur') {
-        labels = ['17-30', '31-50', '51-70', '>70']
+        labels = ['17-30', '31-50', '51-70', '>70'];
     } else {
-        labels = ['Pendidikan Dasar', 'Pendidikan Menengah', 'Undergraduate', 'Postgraduate']
+        labels = ['Pendidikan Dasar', 'Pendidikan Menengah', 'Undergraduate', 'Postgraduate'];
     };
 
     for (let i = 0; i < ballotInsight.length; i++) {
@@ -29,12 +28,9 @@ const fetchGraphData = async (req, res) => {
         for(let j = 0; j < labels.length; j++) {
             if(labels[j] === label) {
                 datas[j] = Number(data); 
-            }
+            };
         };
     };
-
-    // console.log(labels)
-    // console.log(datas)
 
     res.json({ 
         label: labels,
@@ -46,4 +42,4 @@ export {
     index,
     insight,
     fetchGraphData
-}
+};
