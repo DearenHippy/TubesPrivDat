@@ -73,10 +73,42 @@ const calon = async(req, res) => {
 };
 
 const pemilih = async(req, res) => {
+    const limit = 10;
+    let page = req.query.page;
+    
+    if(page === undefined) {
+        page = 1;
+    } else {
+        page = parseInt(page);
+    }
+    
+    const startIndex = (page-1)*limit;
+    const endIndex = page*limit;
+
     const allPemilih = await Model.getAdminPemilih();
+
+    let previousPage = undefined;
+    if(startIndex > 0) {
+        previousPage = '/admin/pemilih?page='+(page-1);
+    }
+    let nextPage = undefined; 
+    if(endIndex < allPemilih.length){
+        nextPage = '/admin/pemilih?page='+(page+1);
+    }
+
+    const result = allPemilih.slice(startIndex, endIndex);
+    
     res.render('admin/pemilih.ejs',{
-        table: allPemilih
+        username: req.session.username,
+        previousPage: previousPage,
+        nextPage: nextPage,
+        table: result
     });
+
+    // const allPemilih = await Model.getAdminPemilih();
+    // res.render('admin/pemilih.ejs',{
+    //     table: allPemilih
+    // });
 };
 
 const detailCalon = async(req, res) => {
