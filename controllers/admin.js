@@ -5,9 +5,36 @@ const index = (req, res) => {
 };
 
 const home = async(req, res) => {
+    const limit = 10;
+    let page = req.query.page;
+    
+    if(page === undefined) {
+        page = 1;
+    } else {
+        page = parseInt(page);
+    }
+    
+    const startIndex = (page-1)*limit;
+    const endIndex = page*limit;
+
     const allPemilihan = await Model.getAdminPemilu();
-    res.render('admin/home.ejs',{
-        table: allPemilihan
+
+    let previousPage = undefined;
+    if(startIndex > 0) {
+        previousPage = '/admin/home?page='+(page-1);
+    }
+    let nextPage = undefined; 
+    if(endIndex < allPemilihan.length){
+        nextPage = '/admin/home?page='+(page+1);
+    }
+
+    const result = allPemilihan.slice(startIndex, endIndex);
+    
+    res.render('admin/insight.ejs',{
+        username: req.session.username,
+        previousPage: previousPage,
+        nextPage: nextPage,
+        table: result
     });
 };
 
