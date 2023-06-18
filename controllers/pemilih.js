@@ -84,7 +84,8 @@ const daftarPemilu = async (req, res) => {
     
     res.render('pemilih/daftar-pemilu.ejs', {
         pemilu: pemilu,
-        status: arrStatus
+        status: arrStatus,
+        username: req.session.username
     });
 };
 
@@ -97,7 +98,8 @@ const mulaiPemilu = async (req, res) => {
 
     res.render('pemilih/mulai-pemilu.ejs', {
         namaPemilu: pemilu[0].nama,
-        daftarCalon: parsedCalon
+        daftarCalon: parsedCalon,
+        username: req.session.username
     });
 };
 
