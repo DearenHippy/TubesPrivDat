@@ -39,9 +39,36 @@ const home = async(req, res) => {
 };
 
 const calon = async(req, res) => {
+    const limit = 10;
+    let page = req.query.page;
+    
+    if(page === undefined) {
+        page = 1;
+    } else {
+        page = parseInt(page);
+    }
+    
+    const startIndex = (page-1)*limit;
+    const endIndex = page*limit;
+
     const allCalon = await Model.getAdminCalon();
+
+    let previousPage = undefined;
+    if(startIndex > 0) {
+        previousPage = '/admin/calon?page='+(page-1);
+    }
+    let nextPage = undefined; 
+    if(endIndex < allCalon.length){
+        nextPage = '/admin/calon?page='+(page+1);
+    }
+
+    const result = allCalon.slice(startIndex, endIndex);
+    
     res.render('admin/calon.ejs',{
-        table: allCalon
+        username: req.session.username,
+        previousPage: previousPage,
+        nextPage: nextPage,
+        table: result
     });
 };
 
