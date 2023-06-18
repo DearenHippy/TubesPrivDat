@@ -23,8 +23,8 @@ let educationGraph = new Chart(educationChart, {
         datasets: [{
             label: "Banyak orang",
             data: [],
-            backgroundColor: "rgba(2,117,216,1)",
-            borderColor: "rgba(2,117,216,1)"
+            backgroundColor: '#007bff',
+            borderColor: '#007bff'
         }]
     },
     options: {
@@ -39,8 +39,8 @@ let ageGraph = new Chart(ageChart, {
         datasets: [{
             label: "Banyak orang",
             data: [],
-            backgroundColor: "rgba(2,117,216,1)",
-            borderColor: "rgba(2,117,216,1)"
+            backgroundColor: '#007bff',
+            borderColor: '#007bff'
         }],
     },
     options: {
