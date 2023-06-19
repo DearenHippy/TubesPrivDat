@@ -139,37 +139,8 @@ const editPemilih = async (req, res) => {
         req.body.desa,
         req.body.id
     )
-    const limit = 10;
-    let page = req.query.page;
-
-    if (page === undefined) {
-        page = 1;
-    } else {
-        page = parseInt(page);
-    }
-
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
-
-    const allCalon = await Model.getAdminCalon();
-
-    let previousPage = undefined;
-    if (startIndex > 0) {
-        previousPage = '/admin/calon?page=' + (page - 1);
-    }
-    let nextPage = undefined;
-    if (endIndex < allCalon.length) {
-        nextPage = '/admin/calon?page=' + (page + 1);
-    }
-
-    const result = allCalon.slice(startIndex, endIndex);
-
-    res.render('admin/pemilih.ejs', {
-        username: req.session.username,
-        previousPage: previousPage,
-        nextPage: nextPage,
-        table: result
-    });
+    
+    res.redirect('/admin/home');
 };
 
 const detailPemilihan = async (req, res) => {
@@ -197,37 +168,7 @@ const tambahPemilu = async (req, res) => {
     const jenis = req.body.desa;
     await Model.tambahPemilu(namaPemilihan, mulai, selesai, jenis);
 
-    const limit = 10;
-    let page = req.query.page;
-
-    if (page === undefined) {
-        page = 1;
-    } else {
-        page = parseInt(page);
-    }
-
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
-
-    const allCalon = await Model.getAdminCalon();
-
-    let previousPage = undefined;
-    if (startIndex > 0) {
-        previousPage = '/admin/calon?page=' + (page - 1);
-    }
-    let nextPage = undefined;
-    if (endIndex < allCalon.length) {
-        nextPage = '/admin/calon?page=' + (page + 1);
-    }
-
-    const result = allCalon.slice(startIndex, endIndex);
-
-    res.render('admin/home.ejs', {
-        username: req.session.username,
-        previousPage: previousPage,
-        nextPage: nextPage,
-        table: result
-    });
+    res.redirect('/admin/home');
 };
 
 const tambahCalon = async (req, res) => {
@@ -254,37 +195,7 @@ const tambahCalon = async (req, res) => {
     await Model.tambahAkunCalon2(namaCalon1);
     await Model.tambahAkunCalon2(namaCalon2);
 
-    const limit = 10;
-    let page = req.query.page;
-
-    if (page === undefined) {
-        page = 1;
-    } else {
-        page = parseInt(page);
-    }
-
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
-
-    const allCalon = await Model.getAdminCalon();
-
-    let previousPage = undefined;
-    if (startIndex > 0) {
-        previousPage = '/admin/calon?page=' + (page - 1);
-    }
-    let nextPage = undefined;
-    if (endIndex < allCalon.length) {
-        nextPage = '/admin/calon?page=' + (page + 1);
-    }
-
-    const result = allCalon.slice(startIndex, endIndex);
-
-    res.render('admin/calon.ejs', {
-        username: req.session.username,
-        previousPage: previousPage,
-        nextPage: nextPage,
-        table: result
-    });
+    res.redirect('/admin/home');
 
 };
 
@@ -313,37 +224,7 @@ const daftarPemilih = async (req, res) => {
         await Model.daftarPemilih(idTerpilih[i], namaPemilihan)
     }
 
-    const limit = 10;
-    let page = req.query.page;
-
-    if (page === undefined) {
-        page = 1;
-    } else {
-        page = parseInt(page);
-    }
-
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
-
-    const allCalon = await Model.getAdminCalon();
-
-    let previousPage = undefined;
-    if (startIndex > 0) {
-        previousPage = '/admin/calon?page=' + (page - 1);
-    }
-    let nextPage = undefined;
-    if (endIndex < allCalon.length) {
-        nextPage = '/admin/calon?page=' + (page + 1);
-    }
-
-    const result = allCalon.slice(startIndex, endIndex);
-
-    res.render('admin/home.ejs', {
-        username: req.session.username,
-        previousPage: previousPage,
-        nextPage: nextPage,
-        table: result
-    });
+    res.redirect('/admin/home');
 };
 
 const editCalon = async (req, res) => {
@@ -353,37 +234,7 @@ const editCalon = async (req, res) => {
     await Model.editCalon(nama, foto, id)
     const allPemilihan = await Model.getAdminPemilu();
 
-    const limit = 10;
-    let page = req.query.page;
-
-    if (page === undefined) {
-        page = 1;
-    } else {
-        page = parseInt(page);
-    }
-
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
-
-    const allCalon = await Model.getAdminCalon();
-
-    let previousPage = undefined;
-    if (startIndex > 0) {
-        previousPage = '/admin/calon?page=' + (page - 1);
-    }
-    let nextPage = undefined;
-    if (endIndex < allCalon.length) {
-        nextPage = '/admin/calon?page=' + (page + 1);
-    }
-
-    const result = allCalon.slice(startIndex, endIndex);
-
-    res.render('admin/calon.ejs', {
-        username: req.session.username,
-        previousPage: previousPage,
-        nextPage: nextPage,
-        table: result
-    });
+    res.redirect('/admin/home');
 };
 
 export {
