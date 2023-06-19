@@ -196,7 +196,6 @@ const tambahPemilu = async (req, res) => {
     const selesai = req.body.namaPemilihan[2].replace(/T/g, ' ');
     const jenis = req.body.desa;
     await Model.tambahPemilu(namaPemilihan, mulai, selesai, jenis);
-    const allPemilihan = await Model.getAdminPemilu();
 
     const limit = 10;
     let page = req.query.page;

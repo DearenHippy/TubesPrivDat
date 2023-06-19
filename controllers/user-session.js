@@ -27,7 +27,8 @@ const auth = (role) => {
             res.redirect('/login');
         } else {
             if (req.session.role !== role) {
-                res.status(403).send('Unauthorized access')
+                // res.status(403).send('Unauthorized access')
+                res.status(401).render('401.ejs');
             } else {
                 next();
             }
