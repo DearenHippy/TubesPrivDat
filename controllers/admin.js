@@ -205,6 +205,9 @@ const tambahCalon = async(req,res)=>{
     await Model.tambahAkunCalon(namaCalon2);
     await Model.tambahAkunCalon2(namaCalon1);
     await Model.tambahAkunCalon2(namaCalon2);
+
+    res.redirect('/admin/home');
+
 };
 
 const tambahCalonPemilihan = async(req,res)=>{
