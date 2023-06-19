@@ -19,6 +19,7 @@ const get = async (akun_id) => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -38,6 +39,7 @@ const getAdminPemilu = async() => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -53,15 +55,32 @@ const getAdminCalon = async() => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
 const getAdminPemilih = async() => {
     const conn = await DB.getConnection();
-    const sql = `SELECT pemilih.pemilih_id,pemilih.nama,pemilih.umur,pemilih.jenis_kelamin,pemilih.alamat,pemilih.pendidikan,
-                desa.nama as 'nama_desa',kota.nama as 'nama_kota',provinsi.nama as 'nama_provinsi'
-                FROM pemilih INNER JOIN desa ON desa.desa_id = pemilih.desa_id INNER JOIN kota ON kota.kota_id = desa.kota_id 
-                INNER JOIN provinsi ON provinsi.provinsi_id = kota.provinsi_id`;
+    const sql = `
+        SELECT 
+            pemilih.pemilih_id,
+            pemilih.nama,
+            pemilih.umur,
+            pemilih.jenis_kelamin,
+            pemilih.alamat,
+            pemilih.pendidikan,
+            desa.nama as 'nama_desa',
+            kota.nama as 'nama_kota',
+            provinsi.nama as 'nama_provinsi'
+        FROM 
+            pemilih INNER JOIN desa 
+                ON desa.desa_id = pemilih.desa_id 
+            INNER JOIN kota 
+                ON kota.kota_id = desa.kota_id 
+            INNER JOIN provinsi 
+                ON provinsi.provinsi_id = kota.provinsi_id
+    `;
+    
     return new Promise((resolve, reject) => {
         conn.query(sql, (error, res) => {
             if (error) {
@@ -69,7 +88,9 @@ const getAdminPemilih = async() => {
             } else {
                 resolve(res)
             }
-        })
+        });
+
+        conn.release();
     });
 }
 
@@ -84,6 +105,8 @@ const getDetailPemilih = async(idPemilih) => {
                 resolve(res)
             }
         })
+
+        conn.release();
     });
 }
 
@@ -99,6 +122,7 @@ const getDetailCalon = async(idCalon) => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -113,6 +137,7 @@ const getDesa = async() => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -129,6 +154,7 @@ const getDaerah = async(namaDesa) => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -143,6 +169,7 @@ const updatePemilih = async(namaPemilih,umur,jenis_kelamin,alamat,pendidikan,nam
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -157,6 +184,7 @@ const getPemilihan = async(pemilihanId) => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -171,6 +199,7 @@ const getCalonPemilihan = async(pemilihanId) => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -185,6 +214,7 @@ const getCalonBelumTerdaftar = async() => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -199,6 +229,7 @@ const getJenisPemilihan = async() => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -213,6 +244,7 @@ const tambahPemilu = async(nama, mulai, selesai, jenis) => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -227,6 +259,7 @@ const getAllPemilihan = async(nama, mulai, selesai, jenis) => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -241,6 +274,7 @@ const getNoUrutLast = async(namaPemilihan) => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -255,6 +289,7 @@ const tambahCalon = async(nama, path_foto, no_urut, nama_pemilihan) => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -269,6 +304,7 @@ const tambahAkunCalon = async(username) => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -283,6 +319,7 @@ const tambahAkunCalon2 = async(username) => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -297,6 +334,7 @@ const daftarPemilih = async(idPemilih,namaPemilihan) => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 
@@ -311,6 +349,7 @@ const editCalon = async(nama,path_foto,id) => {
                 resolve(res)
             }
         })
+        conn.release();
     });
 }
 

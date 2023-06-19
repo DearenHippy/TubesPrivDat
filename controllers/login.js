@@ -4,7 +4,9 @@ import * as PemilihModel from '../models/pemilih.js';
 import * as AdminModel from '../models/admin.js';
 
 const index = async (req, res) => {
-    res.render('login.ejs');
+    res.render('login.ejs', {
+        error: undefined
+    });
 };
 
 const login = async (req, res) => {
@@ -44,6 +46,10 @@ const login = async (req, res) => {
         } catch (error) {
             console.error(error)
         }
+    } else {
+        res.render('login.ejs', {
+            error: 1
+        });
     }
 };
 
