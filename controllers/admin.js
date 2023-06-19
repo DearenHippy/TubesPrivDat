@@ -218,9 +218,17 @@ const tambahPemilihPemilihan = async (req, res) => {
 };
 
 const daftarPemilih = async (req, res) => {
-    const idTerpilih = req.body.terpilih;
+    let idTerpilih = [];
+    const ids = req.body.terpilih;
+    if(!Array.isArray(ids)) {
+        idTerpilih.push(req.body.terpilih);
+    } else {
+        idTerpilih = ids;
+    }
+    console.log(idTerpilih)
     const namaPemilihan = req.body.nama_pemilihan;
     for (let i = 0; i < idTerpilih.length; i++) {
+        console.log(idTerpilih[i])
         await Model.daftarPemilih(idTerpilih[i], namaPemilihan)
     }
 
