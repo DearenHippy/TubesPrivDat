@@ -139,11 +139,37 @@ const editPemilih = async (req, res) => {
         req.body.desa,
         req.body.id
     )
-    const allPemilih = await Model.getAdminPemilih();
+    const limit = 10;
+    let page = req.query.page;
+
+    if (page === undefined) {
+        page = 1;
+    } else {
+        page = parseInt(page);
+    }
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const allCalon = await Model.getAdminCalon();
+
+    let previousPage = undefined;
+    if (startIndex > 0) {
+        previousPage = '/admin/calon?page=' + (page - 1);
+    }
+    let nextPage = undefined;
+    if (endIndex < allCalon.length) {
+        nextPage = '/admin/calon?page=' + (page + 1);
+    }
+
+    const result = allCalon.slice(startIndex, endIndex);
+
     res.render('admin/pemilih.ejs', {
         username: req.session.username,
-        table: allPemilih
-    })
+        previousPage: previousPage,
+        nextPage: nextPage,
+        table: result
+    });
 };
 
 const detailPemilihan = async (req, res) => {
@@ -171,9 +197,37 @@ const tambahPemilu = async (req, res) => {
     const jenis = req.body.desa;
     await Model.tambahPemilu(namaPemilihan, mulai, selesai, jenis);
     const allPemilihan = await Model.getAdminPemilu();
+
+    const limit = 10;
+    let page = req.query.page;
+
+    if (page === undefined) {
+        page = 1;
+    } else {
+        page = parseInt(page);
+    }
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const allCalon = await Model.getAdminCalon();
+
+    let previousPage = undefined;
+    if (startIndex > 0) {
+        previousPage = '/admin/calon?page=' + (page - 1);
+    }
+    let nextPage = undefined;
+    if (endIndex < allCalon.length) {
+        nextPage = '/admin/calon?page=' + (page + 1);
+    }
+
+    const result = allCalon.slice(startIndex, endIndex);
+
     res.render('admin/home.ejs', {
         username: req.session.username,
-        table: allPemilihan
+        previousPage: previousPage,
+        nextPage: nextPage,
+        table: result
     });
 };
 
@@ -201,7 +255,37 @@ const tambahCalon = async (req, res) => {
     await Model.tambahAkunCalon2(namaCalon1);
     await Model.tambahAkunCalon2(namaCalon2);
 
-    res.redirect('/admin/home');
+    const limit = 10;
+    let page = req.query.page;
+
+    if (page === undefined) {
+        page = 1;
+    } else {
+        page = parseInt(page);
+    }
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const allCalon = await Model.getAdminCalon();
+
+    let previousPage = undefined;
+    if (startIndex > 0) {
+        previousPage = '/admin/calon?page=' + (page - 1);
+    }
+    let nextPage = undefined;
+    if (endIndex < allCalon.length) {
+        nextPage = '/admin/calon?page=' + (page + 1);
+    }
+
+    const result = allCalon.slice(startIndex, endIndex);
+
+    res.render('admin/calon.ejs', {
+        username: req.session.username,
+        previousPage: previousPage,
+        nextPage: nextPage,
+        table: result
+    });
 
 };
 
@@ -229,10 +313,37 @@ const daftarPemilih = async (req, res) => {
     for (let i = 0; i < idTerpilih.length; i++) {
         await Model.daftarPemilih(idTerpilih[i], namaPemilihan)
     }
-    const allPemilihan = await Model.getAdminPemilu();
+
+    const limit = 10;
+    let page = req.query.page;
+
+    if (page === undefined) {
+        page = 1;
+    } else {
+        page = parseInt(page);
+    }
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const allCalon = await Model.getAdminCalon();
+
+    let previousPage = undefined;
+    if (startIndex > 0) {
+        previousPage = '/admin/calon?page=' + (page - 1);
+    }
+    let nextPage = undefined;
+    if (endIndex < allCalon.length) {
+        nextPage = '/admin/calon?page=' + (page + 1);
+    }
+
+    const result = allCalon.slice(startIndex, endIndex);
+
     res.render('admin/home.ejs', {
         username: req.session.username,
-        table: allPemilihan
+        previousPage: previousPage,
+        nextPage: nextPage,
+        table: result
     });
 };
 
@@ -242,9 +353,37 @@ const editCalon = async (req, res) => {
     const id = req.body.id;
     await Model.editCalon(nama, foto, id)
     const allPemilihan = await Model.getAdminPemilu();
-    res.render('admin/home.ejs', {
+
+    const limit = 10;
+    let page = req.query.page;
+
+    if (page === undefined) {
+        page = 1;
+    } else {
+        page = parseInt(page);
+    }
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const allCalon = await Model.getAdminCalon();
+
+    let previousPage = undefined;
+    if (startIndex > 0) {
+        previousPage = '/admin/calon?page=' + (page - 1);
+    }
+    let nextPage = undefined;
+    if (endIndex < allCalon.length) {
+        nextPage = '/admin/calon?page=' + (page + 1);
+    }
+
+    const result = allCalon.slice(startIndex, endIndex);
+
+    res.render('admin/calon.ejs', {
         username: req.session.username,
-        table: allPemilihan
+        previousPage: previousPage,
+        nextPage: nextPage,
+        table: result
     });
 };
 
